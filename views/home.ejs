@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Application Homepage</title>
+    <link rel="stylesheet" href="styles/home.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="top">
+            <div class="title">
+                <h1 class="page-title">Blog Dashboard</h1>
+            </div>
+            <div class="actions">
+                <form action="/createupdate" method="GET">
+                    <button class="btn create-btn">+ Create Blog Post</button>
+                </form>
+            </div>
+        </div>
+
+        <table class="tbl">
+            <thead>
+                <th class="postIdHeading">Post Id</th>
+                <th class="postHeading">Post</th>
+            </thead>
+            <% if (locals.postRecords) { %>
+                <tbody class="table_data">
+                    <% for (let i=0; i < postRecords.length; i++) { %>
+                        <tr>
+                            <td class="postIdData">
+                                <form action="/createupdate" method="post">
+                                    <textarea name="post_id" readonly><%= postRecords[i].post_id %></textarea>
+                            </td>
+                            <td class="postData">
+                                <textarea name="post" readonly><%= postRecords[i].post %></textarea>
+                            </td>
+                            <td class="postActions" name="post-actions">
+                                <button type="submit" class="btn update-btn" name="action"
+                                    value="update">Update</button>
+                                </form>
+
+                                <form action="/" method="post">
+                                    <input type="hidden" name="post-id" value="<%= postRecords[i].post_id %>">
+                                    <button type="submit" class="btn delete-btn" name="action"
+                                    value="delete">Delete</button>
+                                </form>
+                                
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+                <% } %>
+        </table>
+
+
+
+    </div>
+</body>
+
+</html>

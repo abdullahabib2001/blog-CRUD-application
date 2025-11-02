@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Create Update Page</title>
+    <link rel="stylesheet" href="styles/create.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="top">
+            <div class="title">
+                <% if (locals.post_id) { %>
+                    <h1 class="page-title">Edit Post</h1>
+                    <% } else { %>
+                        <h1 class="page-title"">Create Post</h1>
+                        <% } %>
+            </div>
+        </div>
+
+        <form action=" /" method="POST">
+                            <div class="post-details">
+                                <div class="post-id-container">
+                                    <span>Post Id: </span>
+                                    <% if (locals.post_id) { %>
+                                        <input type="hidden" name="action" value="update">
+                                        <input type="text" value="<%=locals.post_id %>" name="post-id" readonly>
+                                        <% } else { %>
+                                            <input type="hidden" name="action" value="create">
+                                            <input type="text" id="uuid" name="post-id" readonly>
+                                            <script>
+                                                // Generate a random UUID
+                                                const random_uuid = uuidv4();
+
+                                                // Print the UUID
+                                                console.log(random_uuid);
+
+                                                function uuidv4() {
+                                                    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+                                                        .replace(/[xy]/g, function (c) {
+                                                            const r = Math.random() * 16 | 0,
+                                                                v = c == 'x' ? r : (r & 0x3 | 0x8);
+                                                            return v.toString(16);
+                                                        });
+                                                }
+
+                                                document.getElementById('uuid').value = random_uuid;
+
+                                            </script>
+                                            <% } %>
+                                </div>
+                                <div class="post-container">
+                                    <span>Post: </span>
+                                    <% if (locals.post_id) { %>
+                                        <textarea style="display: block;" name="post" required><%= locals.post %></textarea>
+                                        <% } else { %>
+                                            <textarea style="display: block;" name="post" required></textarea>
+                                            <% } %>
+                                </div>
+                                <button class="save-button">Save</button>
+
+                            </div>
+                            </form>
+            </div>
+</body>
+
+</html>
